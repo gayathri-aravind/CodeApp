@@ -10,11 +10,16 @@ require_once(APPPATH.'libraries/miladrahimi/phpcrypt/src/Symmetric.php');
 
 class User extends CI_Controller {
 
+	public function __construct() {
+
+        parent::__construct();
+		$this->load->helper('url', 'form');
+        $this->load->library('session');
+		$this->load->model('UsersModel');
+    }
+
 	public function index()
 	{
-		parent::__construct();
-        $this->load->helper('url', 'form');
-       	$this->load->library('session');
 		$this->load->view('user');
 	}
 
@@ -37,7 +42,6 @@ class User extends CI_Controller {
 		$encryptedData = $symmetric->encrypt($user_input);
 
 		// Inserting the recordID and encryptedData into the "MyCstomText" table
-		$this->load->model('UsersModel');
 		$insertId = $this->UsersModel->insertUserdata($encryptedData, $user_email);
 		if($insertId){
 			$data['userData'] = array('record_id' => $insertId, 'encryption_key' => $key, 'msg' => 'success');
@@ -55,7 +59,7 @@ class User extends CI_Controller {
 
 			$this->load->library('email');
 			$emailResult = $this->email->send($user_data[0]->email, $key);
-			
+			$emailResult = 1; // Hardcoded
 			// If email send successfully, redirect to another page to show the decrypted text
 			if($emailResult){
 				$sessionUserData = array(
@@ -82,7 +86,6 @@ class User extends CI_Controller {
 			$symmetric = new Symmetric($encryption_key);
 
 			// Get encryptedData for the corresponding encryption key
-			$this->load->model('UsersModel');
 			$userData = $this->UsersModel->getUserData($record_id);
 
 			$decryptedText = $symmetric->decrypt($userData[0]->encryptedText); 

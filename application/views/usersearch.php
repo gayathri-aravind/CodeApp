@@ -50,7 +50,7 @@ if(!empty($show_data)):
         <input type="text" name="record_id" value="<?php echo $userData['record_id'] ?>" readonly /><br>
         <label class="label">Encryption key</label>
         <input type="text" name="encryption_key"  value="<?php echo $userData['encryption_key']?>" readonly />
-        <input type="submit">
+        <!-- <input type="submit"> -->
     </form>
 
     <table>
