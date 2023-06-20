@@ -1,14 +1,14 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Empdata_Model extends CI_Model{
+class UsersModel extends CI_Model{
 
 public function insertUserdata($user_input, $user_email){
 
-    $sql_query=$this->db->insert('MyCstomText',array( 'encryptedText'=>$user_input, 'email'=>$user_email));
-    $insert_id = $sql_query->insert_id();
+    $this->db->insert('codeApp.MyCstomText',array( 'encryptedText'=>$user_input, 'email'=>$user_email));
+    $insert_id = $this->db->insert_id();
 
-    if($sql_query){
+    if($insert_id){
         return $insert_id;
     }else{
         return 0;
