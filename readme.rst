@@ -92,3 +92,18 @@ Follow the below STEPS to install Codeigniter 3 in Ubuntu 20.04
 3. Create a virtual host entry for the cloned project. In my case, it is "http://codeapp-local:8081/".
 
 4. Visit the site: http://codeapp-local:8081/index.php/. It will display a form with two input fields and then the workflow happens as per mentioned in the assignment.
+
+5. In MySQL,
+    Database created: CodeApp
+    Table: MyCstomText
+            And, the schema of this table is:
+
+                    CREATE TABLE `MyCstomText` (
+                    `recordID` int NOT NULL AUTO_INCREMENT,
+                    `encryptedText` varchar(255) DEFAULT NULL,
+                    `email` varchar(255) DEFAULT NULL,
+                    PRIMARY KEY (`recordID`)
+                    ) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci |
+
+    And, update your database connection details in the file: application/config/database.php
+
