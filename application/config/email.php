@@ -16,8 +16,8 @@ $config['email_settings'] = [
     'protocol' => 'smtp',
     'smtp_host' => 'smtp.gmail.com',
     'smtp_port' => 465,
-    'smtp_user' => 'gayathri.aravind@ziffity.com',
-    'smtp_pass' => 'sriZIFF21&',
+    'smtp_user' => 'xxx@domain.com',
+    'smtp_pass' => 'xxxxx',
     'crlf' => "\r\n",
     'newline' => "\r\n"
     ];
