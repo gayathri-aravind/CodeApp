@@ -11,9 +11,9 @@
     
     	public function load(){
     	    // Include PHPMailer library files
-    	    require_once APPPATH.'third_party/phpmailer/src/Exception.php';
-    	    require_once APPPATH.'third_party/phpmailer/src/PHPMailer.php';
-    	    require_once APPPATH.'third_party/phpmailer/src/SMTP.php';
+    	    require_once APPPATH.'third_party/PHPMailer/Exception.php';
+    	    require_once APPPATH.'third_party/PHPMailer/PHPMailer.php';
+    	    require_once APPPATH.'third_party/PHPMailer/SMTP.php';
     
     	    $mail = new PHPMailer(true);
     	    return $mail;

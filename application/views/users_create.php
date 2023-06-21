@@ -34,5 +34,6 @@ print_r($userData); // Array ( [user_input] => cdD [user_email] => dA@SDSA.IN )
         }     
     ?>
     </table>
+    <p>Search Link:<?php echo $userData['searchLink']; ?></p>
 </body>
 </html>

@@ -7,7 +7,6 @@
         }
         
         function send($userEmail, $encryptionKey){
-            echo '***Start***';exit;
             // Load PHPMailer library
             $this->load->library('phpmailer_lib');
     
@@ -37,14 +36,14 @@
             $mailContent = "<h1>Encryption key of yours</h1>
                 <p>This is your encryption key:".$encryptionKey." </p>";
             $mail->Body = $mailContent;
-            echo 'mail<pre>';
-            print_r($mail);exit;
-    
+                echo '<pre>';print_r($mail);exit;
             // Send email
             if(!$mail->send()){
-                return 0;
+                echo 'Email not send successfully';
+                // return 0;
             }else{
-                return 1;
+                echo 'Email send successfully';
+                // return 1;
             }
         }
     
