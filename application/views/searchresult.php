@@ -33,26 +33,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </head>
 <body>
 
-<?php
-
-if(!empty($show_data)):
-    foreach ($show_data as $show):
-        $encryption_key  = $show->randomkey;
-        $recordId = $show->recordId;
-    endforeach;
-    endif;
-
-?>
 
 <div id="container">
-    <form action="<?= base_url('users/getSearchData') ?>" method="post">
-        <label class="label">Record Id</label>
-        <input type="text" name="record_id" value="<?php echo $userData['record_id'] ?>" readonly /><br>
-        <label class="label">Encryption key</label>
-        <input type="text" name="encryption_key"  value="<?php echo $userData['encryption_key']?>" readonly />
-        <input type="submit">
-    </form>
-
     <table>
     <?php
         // Displaying the decrypted text to the user
@@ -66,6 +48,8 @@ if(!empty($show_data)):
         endif;
         ?>
     </table>
+
+    <a href="<?php echo site_url(); ?>">Back</a>
 </div>
 
 </body>

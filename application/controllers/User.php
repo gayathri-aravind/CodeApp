@@ -123,7 +123,7 @@ class User extends CI_Controller {
 		
 		// Email body content
 		$mailContent = "<h1>Encryption key of yours</h1>
-			<p>This is your encryption key:".$encryptionKey." </p>";
+			<p>This is your encryption key:".utf8_encode($encryptionKey)." </p>";
 		$mail->Body = $mailContent;
 			// echo '<pre>';print_r($mail);
 		// Send email
@@ -138,12 +138,26 @@ class User extends CI_Controller {
 	}
 
 	public function getDecyptedInput(){
+		// print_r($_POST);
 		// print_r($_SESSION);
+		$this->load->view('usersearch');
+	}
+
+	public function displayPlainCustomData(){
+		// echo "getSearchData fn";
+
 		$record_id=$this->session->userdata('record_id');
+		if(!isset($record_id)){ 
+			$record_id=addslashes($this->input->post('record_id'));
+		}
 		$encryption_key=$this->session->userdata('encryption_key');
+		if(!isset($encryption_key)){ 
+			$encryption_key=addslashes($this->input->post('encryption_key'));
+		}
 
 		if(isset($record_id) && isset($encryption_key)){
 
+			// displayPlainCustomData()
 			$symmetric = new Symmetric($encryption_key);
 
 			// Get encryptedData for the corresponding encryption key
@@ -155,7 +169,7 @@ class User extends CI_Controller {
 			
 			$data['userData'] = array('record_id' => $record_id, 'encryption_key' => $encryption_key, 'decryptedText' => $decryptedText);
 
-			$this->load->view('usersearch', $data);
+			$this->load->view('searchresult', $data);
 
 		}
 	}

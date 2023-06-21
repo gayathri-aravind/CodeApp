@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-print_r($userData); // Array ( [user_input] => cdD [user_email] => dA@SDSA.IN )
+// print_r($userData); // Array ( [user_input] => cdD [user_email] => dA@SDSA.IN )
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,7 +24,7 @@ print_r($userData); // Array ( [user_input] => cdD [user_email] => dA@SDSA.IN )
                 <td><?php echo 'Record ID: '.$userData['record_id']; ?></td>
             </tr>
             <tr>
-                <td><?php echo 'Encrpted key: '.$userData['encryption_key']; ?></td>
+                <td><?php echo 'Encrpted key: '.utf8_encode($userData['encryption_key']); ?></td>
             </tr>
 
             <?php
