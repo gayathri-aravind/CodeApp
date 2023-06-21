@@ -6,9 +6,9 @@ use MiladRahimi\PhpCrypt\Symmetric;
 use PHPMailer\PHPMailer\PHPMailer;
 
 require_once(APPPATH.'libraries/miladrahimi/phpcrypt/src/Symmetric.php');
+require_once(APPPATH.'libraries/MY_Controller.php');
 
-
-class User extends CI_Controller {
+class User extends MY_Controller {
 
 	public function __construct() {
 
@@ -57,9 +57,11 @@ class User extends CI_Controller {
 			// Get user email from the database and pass it to the PHPMailer
 			$user_data = $this->UsersModel->getUserData($insertId);
 
-			//$this->load->library('email');
-			$emailResult = $this->send($user_data[0]->email, $key);
-			$emailResult = 1; // Hardcoded
+			$mailSubject = 'Your Encryption key';
+			$mailContent = "<h1>Encryption key of yours</h1>
+			<p>This is your encryption key:".utf8_encode($key)." </p>";
+			$emailResult = $this->send($user_data[0]->email, $mailSubject, $mailContent);
+			
 			// If email send successfully, redirect to another page to show the decrypted text
 			if($emailResult){
 				$sessionUserData = array(
@@ -75,66 +77,6 @@ class User extends CI_Controller {
 			$data['userData'] = array('msg' => 'error');
 		}
 		$this->load->view('users_create',$data);
-	}
-
-	public function send($userEmail, $encryptionKey){
-		// Load PHPMailer library
-		$this->load->library('phpmailer_lib');
-
-		// PHPMailer object
-		$mail = $this->phpmailer_lib->load();
-
-		// SMTP configuration
-		$my_config = $this->config->load('email', true); // Loading the email config file
-		// var_dump($my_config); // bool(true)
-		$email_settings = $this->config->item('email_settings', 'email'); // Getting the value of $config['email_settings] from 'email' config file
-		/*
-		var_dump($email_settings);
-		array(7) { ["protocol"]=> string(4) "smtp" ["smtp_host"]=> string(24) "sandbox.smtp.mailtrap.io" ["smtp_port"]=> int(2525) ["smtp_user"]=> string(14) "25bb92a8501a93" ["smtp_pass"]=> string(14) "100d0893f1d321" ["crlf"]=> string(2) " " ["newline"]=> string(2) " " }
-		*/
-		// echo '<pre>';
-		// print_r($email_settings);
-		// exit;
-		$mail->isSMTP();
-		$mail->Host     = $email_settings['smtp_host'];
-		$mail->SMTPAuth = true;
-		$mail->Username = $email_settings['smtp_user'];
-		$mail->Password = $email_settings['smtp_pass'];
-		$mail->SMTPSecure = 'ssl';
-		$mail->Port     = $email_settings['smtp_port'];
-
-		// $mail->setFrom('info@inbox.mailtrap.io');
-		$mail->setFrom('info@ziffity.com', 'Mailtrap');
-
-		// Add a recipient
-		$mail->addAddress($userEmail);
-
-		// Email subject
-		$mail->Subject = 'Your Encryption key';
-		$mail->isHTML(true);
-
-		$mail->SMTPOptions = array(
-			'ssl' => array(
-			'verify_peer' => false,
-			'verify_peer_name' => false,
-			'allow_self_signed' => true
-			)
-		);
-		
-		// Email body content
-		$mailContent = "<h1>Encryption key of yours</h1>
-			<p>This is your encryption key:".utf8_encode($encryptionKey)." </p>";
-		$mail->Body = $mailContent;
-			// echo '<pre>';print_r($mail);
-		// Send email
-		if(!$mail->send()){
-			// echo 'Email not send successfully';
-			return 0;
-		}else{
-			// echo 'Email send successfully';
-			return 1;
-		}
-		// return 1;
 	}
 
 	public function getDecyptedInput(){
